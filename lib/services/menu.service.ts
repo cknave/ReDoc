@@ -12,6 +12,7 @@ import { LazyTasksService } from '../shared/components/LazyFor/lazy-for';
 import { JsonPointer, MarkdownHeading, StringMap } from '../utils/';
 import slugify from 'slugify';
 
+const MAX_STABLE_ITERATIONS = 10;
 
 const CHANGE = {
   NEXT : 1,
@@ -127,7 +128,7 @@ export class MenuService {
 
   onScroll(isScrolledDown) {
     let stable = false;
-    while(!stable) {
+    for(let i = 0; i < MAX_STABLE_ITERATIONS && !stable; i++) {
       if(isScrolledDown) {
         let $nextEl = this.getEl(this.activeIdx + 1);
         if (!$nextEl) return;
